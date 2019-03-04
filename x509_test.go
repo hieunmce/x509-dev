@@ -19,7 +19,6 @@ import (
 	"encoding/hex"
 	"encoding/pem"
 	"fmt"
-	"internal/testenv"
 	"math/big"
 	"net"
 	"net/url"
@@ -30,7 +29,8 @@ import (
 	"testing"
 	"time"
 
-	"golang_org/x/crypto/ed25519"
+	"github.com/rogpeppe/go-internal/testenv"
+	"golang.org/x/crypto/ed25519"
 )
 
 func TestParsePKCS1PrivateKey(t *testing.T) {
@@ -577,7 +577,7 @@ func TestCreateSelfSignedCertificate(t *testing.T) {
 			UnknownExtKeyUsage: testUnknownExtKeyUsage,
 
 			BasicConstraintsValid: true,
-			IsCA: true,
+			IsCA:                  true,
 
 			OCSPServer:            []string{"http://ocsp.example.com"},
 			IssuingCertificateURL: []string{"http://crt.example.com/ca1.crt"},
@@ -1393,7 +1393,7 @@ func TestMaxPathLen(t *testing.T) {
 		NotAfter:  time.Unix(100000, 0),
 
 		BasicConstraintsValid: true,
-		IsCA: true,
+		IsCA:                  true,
 	}
 
 	cert1 := serialiseAndParse(t, template)
@@ -1434,8 +1434,8 @@ func TestNoAuthorityKeyIdInSelfSignedCert(t *testing.T) {
 		NotAfter:  time.Unix(100000, 0),
 
 		BasicConstraintsValid: true,
-		IsCA:         true,
-		SubjectKeyId: []byte{1, 2, 3, 4},
+		IsCA:                  true,
+		SubjectKeyId:          []byte{1, 2, 3, 4},
 	}
 
 	if cert := serialiseAndParse(t, template); len(cert.AuthorityKeyId) != 0 {

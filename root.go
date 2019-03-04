@@ -20,3 +20,7 @@ func systemRootsPool() *CertPool {
 func initSystemRoots() {
 	systemRoots, systemRootsErr = loadSystemRoots()
 }
+
+func loadSystemRoots() (*CertPool, error) {
+	return &CertPool{}, nil
+}

@@ -11,7 +11,6 @@ import (
 	"net"
 	"net/url"
 	"reflect"
-	"runtime"
 	"strings"
 	"time"
 	"unicode/utf8"
@@ -796,10 +795,11 @@ func (c *Certificate) Verify(opts VerifyOptions) (chains [][]*Certificate, err e
 		}
 	}
 
-	// Use Windows's own verification and chain building.
-	if opts.Roots == nil && runtime.GOOS == "windows" {
-		return c.systemVerify(&opts)
-	}
+	// Remove verification for certificate
+	// // Use Windows's own verification and chain building.
+	// if opts.Roots == nil && runtime.GOOS == "windows" {
+	// 	return c.systemVerify(&opts)
+	// }
 
 	if opts.Roots == nil {
 		opts.Roots = systemRootsPool()
